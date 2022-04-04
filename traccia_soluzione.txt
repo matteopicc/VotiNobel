@@ -1,0 +1,83 @@
+INPUT:
+-insieme esami(ESAMI){e1,e2,.....en}
+-# crediti(m)
+
+OUTPUT:
+-Sottoinsieme esami tale che:
+   *somma ESAMI.crediti == m
+   *media ESAMI.voto sia massima
+   
+ APPROCCIO 1(il più stupido)// esplora più volte la stessa soluzione, dato che esami invertiti danno soluzioni uguali
+ 
+ Ad ogni livello l della ricorsione inserisco un esame
+ in PARZIALE.Devo decidere quale -> li provo tutti
+ 
+ SOLUZIONE PARZIALE = ad ogni livello l,PARZIALE sarà un sottoinsieme di esattamente l esami
+ 
+ GENERAZIONE SOTTOPROBLEMI = aggiungere un nuovo esame
+ a PARZIALE tra quelli che non ho ancora aggiunto 
+    PARZIALE = PARZIALE + ESAMI(i)
+    
+ L=0 -> N scelte possibili
+    PARZIALE = {e1}
+      L=1
+         PARZIALE = {e1,e2}
+           L=2
+              PARZIALE = {e1,e2,e3}
+                 [......]
+                 
+                 
+       L=1
+         PARZIALE = {e1,e3}
+           L=2
+             PARZIALE = {e1,e3,e2}
+                [......]  
+                
+                       
+    PARZIALE = {e2}
+      L=1
+         PARZIALE = {e2,e1}
+           [........]
+         
+    [.....]
+    PARZIALE = {en}
+    
+ CASI TERMINALI
+ 
+1)L=N esplorati tutti gli esami
+   
+2)PARZIALE.sommaCrediti() == m
+     ->potrebbe essere una soluzione, controllo se è
+      la soluzione migliore,calcolando la media voto
+     
+  ELSE SE PARZIALE.sommaCrediti()>m
+     -> non può essere una soluzione-> esco dalla ricorsione
+        return;
+        
+        
+        
+ APPROCCIO 2(più furbo) -> complessità 2^N, alta ma non come N!
+ 
+ Generare i sotto-problemi uno per volta, scorrendo
+ l'insieme d esami di partenza in ordine, decidendo
+ per ogni esame:
+ *se debba essere inserito
+ *se non debba essere inserito
+ 
+ 
+ IL LIVELLO DELLA RICORSIONE == ESAME DA CONSIDERARE
+ 
+  L=0 -> 2 scelte possibili
+     PARZIALE = {e1}
+        L=1
+           PARZIALE = {e1,e2}
+           
+           PARZIALE = {e1}
+     
+     PARZIALE = {}
+        L=1
+           PARZIALE = {e2}
+           
+           PARZIALE = {}
+ 
+    
